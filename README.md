@@ -77,10 +77,21 @@ npx vercel deploy --prod
 
 Repository/deployment creation requires authenticated GitHub/Vercel access. Never bypass a denied connection or publish secrets. Before opening inquiries, test a real upload, successful saved lead, notification, inbox photo links, and status change against your configured Supabase project. Add Vercel firewall limits for `/api/admin/login` and `/api/upload` in addition to database rate limiting.
 
-## 8. Replace placeholders
-Edit `lib/content.ts` to update hero text, CTA, artist bio, service areas, contact details, social links, portrait, and portfolio records. Replace `public/mural-concept.webp` with real permission-cleared Marc imagery, update descriptive alt text, and remove concept labels only after the content is verified. The hero and “Greetings from Cumberland” project now use two photos supplied by the user as Marc’s work. Only image-visible details are described; client, date, dimensions, and project history remain unverified. The second photo is labeled as the mural in context; the person pictured has not been identified. The original generated concept asset is retained unused and is not a Marc Phillips mural.
+## 8. Content and launch checklist
+All editable copy lives in `lib/content.ts`. Visible "placeholder" notes have been removed from the public site; the items below are what still needs Marc before launch.
 
-Add approved biography and portrait. Replace the privacy policy’s provisional contact/deletion wording with Marc’s real contact details and a reviewed retention policy. Keep service-area claims accurate and avoid adding unverified clients, prices, awards, testimonials, or experience.
+- [ ] **Bio.** `site.bio` is a draft written only from what the two murals show (Cumberland/Western Maryland, postcard-style tribute, lettering on brick). Marc should approve or rewrite it. Avoid unverified clients, prices, awards, or years of experience.
+- [ ] **Contact email.** Set `site.email`. It then appears in the footer and in the privacy page's removal instructions (which otherwise say "reply to your project correspondence").
+- [ ] **Privacy retention.** Have the privacy wording reviewed and confirm the retention period.
+- [ ] **Fort Hill Sentinels location.** `location` is empty until confirmed.
+- [ ] **Photo in context.** The person in `cumberland-mural-in-context.jpg` is not identified on the site. If it is Marc and he is happy to be named, add a portrait/caption on the About page.
+- [ ] **More work.** Add projects to `site.projects` (image in `public/`, descriptive alt text). The home grid and About page pick them up automatically; landing pages choose an image via each entry's `image` field.
+- [ ] **Production env + end-to-end test** (sections 2, 6, 7): a real upload, a saved lead, the notification email, inbox photo links, and a status change.
+
+`public/mural-concept.webp` is an unused generated concept, not Marc's work; it can be deleted.
+
+### Design system
+Tokens (colors, gutter, max width) are CSS variables at the top of `app/globals.css`. Type is Bricolage Grotesque (headings/body) with Instrument Serif italic for `<em>` accents, loaded with `next/font` in `app/layout.tsx`. The favicon is `app/icon.svg`.
 
 ## Lead inbox
 Go to `/admin`, sign in, expand a lead to see details and private photos, then change its status. Unauthorized requests redirect to sign-in; API mutations separately enforce the signed admin session and same-origin requests. Sessions are HTTP-only, secure in production, and expire after eight hours. The inbox paginates 25 leads at a time. No customer photos are published in the portfolio.
