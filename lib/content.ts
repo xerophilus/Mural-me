@@ -1,6 +1,6 @@
 export const site = {
  name: "Marc Phillips", artistSlug: "marc-phillips", artistId: "b76b7a25-b062-42c8-8dc6-a474bcc2a730",
- url: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
+ url: process.env.NEXT_PUBLIC_SITE_URL || (process.env.NODE_ENV === "production" ? "https://mural-me.vercel.app" : "http://localhost:3000"),
  hero: "Transform Your Wall Into Something People Remember.",
  subheading: "Custom murals by Western Maryland artist Marc Phillips.",
  cta: "Show Marc Your Wall", email: "", phone: "", socialLinks: [] as {label:string;url:string}[],
