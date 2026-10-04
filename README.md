@@ -81,7 +81,7 @@ Repository/deployment creation requires authenticated GitHub/Vercel access. Neve
 All editable copy lives in `lib/content.ts`. Visible "placeholder" notes have been removed from the public site; the items below are what still needs Marc before launch.
 
 - [ ] **Bio.** `artists[0].bio` is a draft written only from what the two murals show (Cumberland/Western Maryland, postcard-style tribute, lettering on brick). Marc should approve or rewrite it. Avoid unverified clients, prices, awards, or years of experience.
-- [ ] **Contact email.** Set `artists[0].email`. It then appears in the footer and in the privacy page's removal instructions (which otherwise say "reply to your project correspondence").
+- [x] **Contact email.** `artists[0].email` is set; it appears in the footer and the privacy page. It is also the fallback for lead notifications when `LEAD_NOTIFICATION_EMAIL` is unset.
 - [ ] **Privacy retention.** Have the privacy wording reviewed and confirm the retention period.
 - [x] **Fort Hill Sentinels location.** Fort Hill High School, Cumberland, MD.
 - [x] **Portrait.** `cumberland-mural-in-context.jpg` is Marc; it is used as his portrait (cropped via `portraitFocus`). Swap `profileImage` for a dedicated portrait if he has one.
