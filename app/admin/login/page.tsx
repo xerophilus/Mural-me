@@ -1,0 +1,3 @@
+import type {Metadata} from "next";
+export const metadata:Metadata={title:"Lead inbox sign in",robots:{index:false,follow:false}};
+export default async function Login({searchParams}:{searchParams:Promise<{error?:string}>}){const p=await searchParams;return <section className="section login"><p className="eyebrow">MARC’S LEAD INBOX</p><h1>Sign in.</h1>{p.error&&<p role="alert" className="form-error">Sign in failed. Check your password or server configuration.</p>}<form action="/api/admin/login" method="post"><label htmlFor="password">Admin password<input id="password" type="password" name="password" required autoComplete="current-password" maxLength={200}/></label><button className="button">Open lead inbox</button></form></section>}
