@@ -1,6 +1,6 @@
 # Marc Phillips — mural project inquiries
 
-Next.js App Router, TypeScript, Tailwind CSS, React Hook Form + Zod, and Supabase. An editorial marketing site with five service/location landing pages, a nine-step photo inquiry flow, and a small protected lead inbox. Artist content is centralized in `lib/content.ts`; the data model preserves artist associations for future use.
+Next.js App Router, TypeScript, Tailwind CSS, React Hook Form + Zod, and Supabase. An editorial marketing site with five service/location landing pages, a nine-step photo inquiry flow, and a small protected lead inbox. It launches as Marc's portfolio and is structured to grow into a multi-artist mural hub: artist and project content is data in `lib/content.ts` (mirroring the database tables), and pages read from an artist record rather than hard-coding Marc. See `docs/FUTURE.md` for the hub migration path.
 
 ## 1. Local setup
 Use Node.js 22+ (Node 24 recommended).
@@ -80,12 +80,12 @@ Repository/deployment creation requires authenticated GitHub/Vercel access. Neve
 ## 8. Content and launch checklist
 All editable copy lives in `lib/content.ts`. Visible "placeholder" notes have been removed from the public site; the items below are what still needs Marc before launch.
 
-- [ ] **Bio.** `site.bio` is a draft written only from what the two murals show (Cumberland/Western Maryland, postcard-style tribute, lettering on brick). Marc should approve or rewrite it. Avoid unverified clients, prices, awards, or years of experience.
-- [ ] **Contact email.** Set `site.email`. It then appears in the footer and in the privacy page's removal instructions (which otherwise say "reply to your project correspondence").
+- [ ] **Bio.** `artists[0].bio` is a draft written only from what the two murals show (Cumberland/Western Maryland, postcard-style tribute, lettering on brick). Marc should approve or rewrite it. Avoid unverified clients, prices, awards, or years of experience.
+- [ ] **Contact email.** Set `artists[0].email`. It then appears in the footer and in the privacy page's removal instructions (which otherwise say "reply to your project correspondence").
 - [ ] **Privacy retention.** Have the privacy wording reviewed and confirm the retention period.
 - [ ] **Fort Hill Sentinels location.** `location` is empty until confirmed.
 - [ ] **Photo in context.** The person in `cumberland-mural-in-context.jpg` is not identified on the site. If it is Marc and he is happy to be named, add a portrait/caption on the About page.
-- [ ] **More work.** Add projects to `site.projects` (image in `public/`, descriptive alt text). The home grid and About page pick them up automatically; landing pages choose an image via each entry's `image` field.
+- [ ] **More work.** Add entries to `projects` (image in `public/`, alt text, pixel dimensions; `cover` is the card image, `images` the project-page gallery). Each gets a page at `/work/[slug]` and a sitemap entry; `featured` controls the home grid.
 - [ ] **Production env + end-to-end test** (sections 2, 6, 7): a real upload, a saved lead, the notification email, inbox photo links, and a status change.
 
 `public/mural-concept.webp` is an unused generated concept, not Marc's work; it can be deleted.
