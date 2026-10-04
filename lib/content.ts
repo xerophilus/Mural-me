@@ -39,7 +39,7 @@ export const primaryArtist = artists[0];
 
 export const site = {
  name: primaryArtist.name,
- url: process.env.NEXT_PUBLIC_SITE_URL || (process.env.NODE_ENV === "production" ? "https://mural-me.vercel.app" : "http://localhost:3000"),
+ url: process.env.NEXT_PUBLIC_SITE_URL || (process.env.NODE_ENV === "production" ? "https://muralme.studio" : "http://localhost:3000"),
  subheading: `Custom murals by ${primaryArtist.region} artist ${primaryArtist.name}.`,
  heroImage: img.greetings,
 };

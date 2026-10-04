@@ -59,6 +59,8 @@ Mobile camera and photo library are separate controls. Export HEIC photos as JPG
 Photos uploaded but not submitted (or removed from the form) remain private. Before launch, schedule cleanup: list objects older than 24 hours and remove only those whose paths do not occur in `request_images.image_url`. Never blindly delete a session prefix. Delete associated storage objects when honoring a lead deletion request; row deletion alone does not remove objects.
 
 ## 6. Email
+Production sends from the verified domain `muralme.studio` (DNS managed in Vercel). In Resend, add the domain and copy its records into Vercel → Domains → muralme.studio → DNS Records (use only the subdomain part, e.g. `send`, `resend._domainkey`, in the Name field). Then set `EMAIL_FROM` to e.g. `Mural inquiries <inquiries@muralme.studio>` and redeploy.
+
 V1 implements Resend using fetch with a small `EmailProvider` abstraction in `lib/email.ts`. Verify a sender domain, configure `RESEND_API_KEY`, `EMAIL_FROM`, and `LEAD_NOTIFICATION_EMAIL`. Local development without a provider logs the full notification payload instead of failing. Do not use production customer data in local logs.
 
 The lead is saved before email is attempted. Notification failures do not lose the lead: the inbox shows `pending`/`failed`/`sent`. Check failed notifications in the inbox and contact the lead directly. V1 has no automatic retry queue; add an outbox worker when operational volume requires it. Production without provider credentials marks notification delivery failed rather than silently logging personal data.
