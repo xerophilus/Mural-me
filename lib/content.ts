@@ -16,7 +16,7 @@ export const artists: Artist[] = [{
  role: "Mural artist", region: "Western Maryland",
  // Draft written from the work shown on the site. Marc should approve or replace it before launch.
  bio: "Marc Phillips paints custom murals around Cumberland and Western Maryland — from postcard-style hometown tributes packed with local landmarks to bold lettering on exterior brick. Every project starts the same way: a wall, a place, and the people who will see it every day.",
- email: "", phone: "", socialLinks: [],
+ email: "phillips.marc.a@gmail.com", phone: "", socialLinks: [],
  // Marc in front of his Greetings from Cumberland mural; cropped to a portrait with portraitFocus.
  profileImage: "/cumberland-mural-in-context.jpg", portraitFocus: "62% 70%",
  serviceAreas: ["Cumberland, MD", "Frostburg, MD", "Hagerstown, MD", "Morgantown, WV"],
