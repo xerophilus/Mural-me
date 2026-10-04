@@ -83,8 +83,8 @@ All editable copy lives in `lib/content.ts`. Visible "placeholder" notes have be
 - [ ] **Bio.** `artists[0].bio` is a draft written only from what the two murals show (Cumberland/Western Maryland, postcard-style tribute, lettering on brick). Marc should approve or rewrite it. Avoid unverified clients, prices, awards, or years of experience.
 - [ ] **Contact email.** Set `artists[0].email`. It then appears in the footer and in the privacy page's removal instructions (which otherwise say "reply to your project correspondence").
 - [ ] **Privacy retention.** Have the privacy wording reviewed and confirm the retention period.
-- [ ] **Fort Hill Sentinels location.** `location` is empty until confirmed.
-- [ ] **Photo in context.** The person in `cumberland-mural-in-context.jpg` is not identified on the site. If it is Marc and he is happy to be named, add a portrait/caption on the About page.
+- [x] **Fort Hill Sentinels location.** Fort Hill High School, Cumberland, MD.
+- [x] **Portrait.** `cumberland-mural-in-context.jpg` is Marc; it is used as his portrait (cropped via `portraitFocus`). Swap `profileImage` for a dedicated portrait if he has one.
 - [ ] **More work.** Add entries to `projects` (image in `public/`, alt text, pixel dimensions; `cover` is the card image, `images` the project-page gallery). Each gets a page at `/work/[slug]` and a sitemap entry; `featured` controls the home grid.
 - [ ] **Production env + end-to-end test** (sections 2, 6, 7): a real upload, a saved lead, the notification email, inbox photo links, and a status change.
 

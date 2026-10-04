@@ -137,6 +137,11 @@ footer{background:var(--ink);color:var(--paper);padding:56px var(--gutter) 26px}
 .about-preview{display:grid;grid-template-columns:1fr 1fr;gap:10%;align-items:center;border-top:1px solid var(--line)}
 .about-preview blockquote{font-size:clamp(2.8rem,5.4vw,5.5rem);font-weight:650;line-height:1;letter-spacing:-.045em;position:relative;padding-top:.6em}
 .about-preview blockquote>span{position:absolute;top:-.05em;left:-.04em;font-family:var(--serif);font-size:2.2em;line-height:1;color:var(--accent);-webkit-text-stroke:1px var(--ink)}
+.portrait{max-width:520px}
+.portrait img{aspect-ratio:4/5;object-fit:cover}
+.portrait figcaption,.about-work figcaption{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:12px}
+.about-intro .portrait{margin-top:56px;max-width:400px}
+.about-intro{position:static}
 .about-preview h2{margin:24px 0}
 .about-preview .text-link{margin-top:32px}
 
@@ -169,7 +174,6 @@ footer{background:var(--ink);color:var(--paper);padding:56px var(--gutter) 26px}
 .about-intro h1{margin:26px 0 30px;font-size:clamp(3rem,5.6vw,5.5rem)}
 .about-intro .lede{font-size:1.2rem;margin-bottom:34px;max-width:520px}
 .about-work{display:grid;gap:40px}
-.about-work figcaption{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:12px}
 .about-areas{border-top:1px solid var(--line);padding-top:72px}
 .about-areas .places{grid-template-columns:repeat(4,1fr);max-width:none}
 

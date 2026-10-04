@@ -7,7 +7,7 @@ export type Artist = {
  id:string;slug:string;name:string;firstName:string;
  /** Short role/location line used under the name, e.g. in the header wordmark. */
  role:string;region:string;
- bio:string;email:string;phone:string;socialLinks:{label:string;url:string}[];profileImage:string;
+ bio:string;email:string;phone:string;socialLinks:{label:string;url:string}[];profileImage:string;portraitFocus:string;
  serviceAreas:string[];serviceAreaNote:string;
 };
 
@@ -16,20 +16,22 @@ export const artists: Artist[] = [{
  role: "Mural artist", region: "Western Maryland",
  // Draft written from the work shown on the site. Marc should approve or replace it before launch.
  bio: "Marc Phillips paints custom murals around Cumberland and Western Maryland — from postcard-style hometown tributes packed with local landmarks to bold lettering on exterior brick. Every project starts the same way: a wall, a place, and the people who will see it every day.",
- email: "", phone: "", socialLinks: [], profileImage: "",
+ email: "", phone: "", socialLinks: [],
+ // Marc in front of his Greetings from Cumberland mural; cropped to a portrait with portraitFocus.
+ profileImage: "/cumberland-mural-in-context.jpg", portraitFocus: "62% 70%",
  serviceAreas: ["Cumberland, MD", "Frostburg, MD", "Hagerstown, MD", "Morgantown, WV"],
  serviceAreaNote: "Surrounding Maryland, West Virginia & Pennsylvania areas.",
 }];
 
 const img = {
  greetings: {src:"/greetings-from-cumberland.jpg",alt:"Greetings from Cumberland mural by Marc Phillips, with local landmarks and businesses illustrated inside large postcard-style letters",width:1200,height:673},
- greetingsContext: {src:"/cumberland-mural-in-context.jpg",alt:"Greetings from Cumberland mural by Marc Phillips in its interior setting",width:960,height:683},
- fortHill: {src:"/fort-hill-sentinels.jpg",alt:"Red and white Fort Hill Sentinels mascot and lettering painted by Marc Phillips on an exterior brick wall",width:960,height:1280},
+ greetingsContext: {src:"/cumberland-mural-in-context.jpg",alt:"Marc Phillips standing in front of his Greetings from Cumberland mural",width:960,height:683},
+ fortHill: {src:"/fort-hill-sentinels.jpg",alt:"Red and white Fort Hill Sentinels mascot and lettering painted by Marc Phillips on an exterior brick wall at Fort Hill High School in Cumberland, Maryland",width:960,height:1280},
 } satisfies Record<string,ProjectImage>;
 
 export const projects: Project[] = [
  {slug:"greetings-from-cumberland",artistId:artists[0].id,title:"Greetings from Cumberland",location:"Cumberland, Maryland",category:"Interior mural",featured:true,description:"A postcard-style mural celebrating Cumberland through local landmarks, businesses, and bold hand-painted lettering.",cover:img.greetingsContext,images:[img.greetings,img.greetingsContext]},
- {slug:"fort-hill-sentinels",artistId:artists[0].id,title:"Fort Hill Sentinels",location:"",category:"Exterior mural",featured:true,description:"Bold red-and-white lettering and a Sentinel mascot, painted directly onto exterior brick.",cover:img.fortHill,images:[img.fortHill]},
+ {slug:"fort-hill-sentinels",artistId:artists[0].id,title:"Fort Hill Sentinels",location:"Fort Hill High School, Cumberland, Maryland",category:"Exterior mural",featured:true,description:"Bold red-and-white lettering and the Sentinel mascot, painted directly onto exterior brick for Fort Hill High School.",cover:img.fortHill,images:[img.fortHill]},
 ];
 
 /** The artist this deployment presents at the site root. When the hub launches, artist pages move under /artists/[slug]. */
