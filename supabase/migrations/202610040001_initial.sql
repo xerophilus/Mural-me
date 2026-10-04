@@ -61,4 +61,11 @@ begin
 end;$$;
 revoke all on function public.consume_rate_limit(text,integer,integer) from public,anon,authenticated;
 grant execute on function public.consume_rate_limit(text,integer,integer) to service_role;
+-- New Supabase projects may include a privileged RLS event-trigger helper.
+-- Event triggers do not need this helper exposed as an RPC.
+do $$ begin
+ if to_regprocedure('public.rls_auto_enable()') is not null then
+  revoke execute on function public.rls_auto_enable() from public, anon, authenticated;
+ end if;
+end $$;
 commit;
