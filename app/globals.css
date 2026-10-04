@@ -61,8 +61,7 @@ footer{background:var(--ink);color:var(--paper);padding:56px var(--gutter) 26px}
 .footer-links a:hover,.footer-bottom a:hover{color:var(--accent)}
 .footer-bottom{border-top:1px solid var(--line-dark);padding-top:22px;font-size:.78rem;color:#c0c6b8}
 .mm-credit{display:inline-flex;align-items:center;gap:8px;letter-spacing:.02em}
-.mm-credit img{width:18px;height:18px}
-.mm-credit strong{color:var(--paper);font-weight:700;letter-spacing:-.01em}
+.mm-credit img{width:auto;height:17px}
 
 /* ---------- Home: hero ---------- */
 .hero{padding:64px var(--gutter) 0;max-width:calc(var(--max) + 2 * var(--gutter));margin:auto}
