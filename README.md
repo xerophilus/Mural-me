@@ -1,0 +1,95 @@
+# Marc Phillips — mural project inquiries
+
+Next.js App Router, TypeScript, Tailwind CSS, React Hook Form + Zod, and Supabase. An editorial marketing site with five service/location landing pages, a nine-step photo inquiry flow, and a small protected lead inbox. Artist content is centralized in `lib/content.ts`; the data model preserves artist associations for future use.
+
+## 1. Local setup
+Use Node.js 22+ (Node 24 recommended).
+
+```sh
+npm ci
+cp .env.example .env.local
+npm run dev
+```
+
+Open http://localhost:3000. Without Supabase/signing configuration the marketing pages render, but uploads and submission are disabled with a clear notice. No fake successful leads are generated.
+
+Checks:
+
+```sh
+npm run lint
+npm run typecheck
+npm run build
+```
+
+## 2. Environment variables
+- `NEXT_PUBLIC_SITE_URL`: canonical HTTPS origin in production, without a trailing slash.
+- `NEXT_PUBLIC_SUPABASE_URL`: Supabase project URL.
+- `SUPABASE_SERVICE_ROLE_KEY`: server-only service key. Never expose it in browser code.
+- `UPLOAD_SIGNING_SECRET`: random secret, at least 32 characters, signs one-hour upload sessions and photo proofs.
+- `ADMIN_SESSION_SECRET`: separate random secret, at least 32 characters, signs eight-hour admin cookies.
+- `ADMIN_PASSWORD_HASH`: salt:scrypt-hash generated as below.
+- `LEAD_NOTIFICATION_EMAIL`: Marc’s confirmed notification address.
+- `RESEND_API_KEY`: optional locally; required for production notification delivery.
+- `EMAIL_FROM`: sender at your Resend-verified domain, e.g. `Mural inquiries <inquiries@your-domain.com>`.
+
+Generate each signing secret with `openssl rand -hex 32`. Generate an admin hash without putting the password in command history:
+
+```sh
+read -rs -p 'Admin password: ' MARC_PASSWORD
+export MARC_PASSWORD
+node -e 'const c=require("node:crypto");const s=c.randomBytes(16).toString("hex");console.log(s+":"+c.scryptSync(process.env.MARC_PASSWORD,s,64).toString("hex"))'
+unset MARC_PASSWORD
+```
+
+Paste the resulting hash into the environment variable. Use a strong unique password. Do not commit `.env.local` or deployment credentials.
+
+## 3. Supabase setup
+Create a Supabase project and copy its project URL and server-only service key to your local and production environments. The browser does not connect directly to the database or storage; API routes validate all requests before using the service client.
+
+## 4. Database migrations
+Apply `supabase/migrations/202610040001_initial.sql` in the Supabase SQL editor, or link with the Supabase CLI and run `supabase db push`. Apply once to a new database; use new migration files for changes. The migration seeds Marc’s artist UUID; keep this aligned with `site.artistId` if importing another dataset. No unverified portfolio projects are seeded.
+
+Tables: artists, projects, project_images, project_requests, request_images, and rate_limits. RLS is enabled and anonymous/authenticated access to private data is revoked. `submit_project_request` atomically saves a lead and its photos. Service-role-only RPCs handle submissions and distributed rate limits.
+
+## 5. Storage
+The migration creates **private** bucket `request-images`, 8 MB limit per image, JPG/PNG/WebP only. Do not add public-read or anonymous-write storage policies. Upload routes validate actual image signatures, cap session uploads at 12, and save under random session/image IDs. Image paths are stored in `request_images.image_url`; the historical field name does not imply public URLs. The inbox generates one-hour signed links; notification links expire after seven days.
+
+Mobile camera and photo library are separate controls. Export HEIC photos as JPG when the device does not automatically convert. Maximum 12 wall and inspiration photos combined.
+
+Photos uploaded but not submitted (or removed from the form) remain private. Before launch, schedule cleanup: list objects older than 24 hours and remove only those whose paths do not occur in `request_images.image_url`. Never blindly delete a session prefix. Delete associated storage objects when honoring a lead deletion request; row deletion alone does not remove objects.
+
+## 6. Email
+V1 implements Resend using fetch with a small `EmailProvider` abstraction in `lib/email.ts`. Verify a sender domain, configure `RESEND_API_KEY`, `EMAIL_FROM`, and `LEAD_NOTIFICATION_EMAIL`. Local development without a provider logs the full notification payload instead of failing. Do not use production customer data in local logs.
+
+The lead is saved before email is attempted. Notification failures do not lose the lead: the inbox shows `pending`/`failed`/`sent`. Check failed notifications in the inbox and contact the lead directly. V1 has no automatic retry queue; add an outbox worker when operational volume requires it. Production without provider credentials marks notification delivery failed rather than silently logging personal data.
+
+## 7. Vercel / GitHub deployment
+Create a private GitHub repository, push this directory, and import it into Vercel as a Next.js project. Use Node 24, default build command `npm run build`, root directory `.`. Configure all variables above for production, and separate Supabase credentials for previews. Set the canonical origin to the actual production domain, then redeploy because metadata is generated at build time.
+
+```sh
+git init -b main
+git add .
+git commit -m "Build Marc Phillips mural inquiry site"
+gh repo create marc-phillips-murals --private --source=. --push
+npx vercel link
+npx vercel deploy --prod
+```
+
+Repository/deployment creation requires authenticated GitHub/Vercel access. Never bypass a denied connection or publish secrets. Before opening inquiries, test a real upload, successful saved lead, notification, inbox photo links, and status change against your configured Supabase project. Add Vercel firewall limits for `/api/admin/login` and `/api/upload` in addition to database rate limiting.
+
+## 8. Replace placeholders
+Edit `lib/content.ts` to update hero text, CTA, artist bio, service areas, contact details, social links, portrait, and portfolio records. Replace `public/mural-concept.webp` with real permission-cleared Marc imagery, update descriptive alt text, and remove concept labels only after the content is verified. The current generated concept is not a Marc Phillips mural. “Greetings from Cumberland” is an explicitly requested placeholder; its imagery and details remain unverified.
+
+Add approved biography and portrait. Replace the privacy policy’s provisional contact/deletion wording with Marc’s real contact details and a reviewed retention policy. Keep service-area claims accurate and avoid adding unverified clients, prices, awards, testimonials, or experience.
+
+## Lead inbox
+Go to `/admin`, sign in, expand a lead to see details and private photos, then change its status. Unauthorized requests redirect to sign-in; API mutations separately enforce the signed admin session and same-origin requests. Sessions are HTTP-only, secure in production, and expire after eight hours. The inbox paginates 25 leads at a time. No customer photos are published in the portfolio.
+
+## Architecture
+- `app/`: marketing, metadata routes, request flow, admin, APIs.
+- `components/`: shell and mobile request form.
+- `lib/`: content, schema, Supabase server client, security, email provider.
+- `supabase/migrations/`: database, storage, RLS, atomic submissions, rate limits.
+- `docs/FUTURE.md`: marketplace evolution without building it into V1.
+
+V1 does not retain draft personal data in browser storage. Form state survives back/forward step navigation but a page refresh starts again. An expired upload session requires restarting; no saved lead is shown until the database confirms success. The server uses the session UUID for duplicate-submit protection.
