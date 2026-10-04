@@ -5,3 +5,5 @@
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
 
 .hero-image img{height:auto;aspect-ratio:1200 / 673;object-fit:contain}.portfolio figure img{height:auto;aspect-ratio:1200 / 673;object-fit:contain}.work-context img{height:auto;aspect-ratio:960 / 683;object-fit:contain}.work-context figcaption{font-size:.65rem;letter-spacing:.1em;margin-top:12px;color:var(--muted)}.project-description{font-size:.95rem;color:var(--muted);margin-top:18px;max-width:600px}.article-image{height:auto;aspect-ratio:1200 / 673;object-fit:contain}
+
+.portfolio{grid-template-columns:1.35fr 1fr;align-items:start}.portfolio figure img{aspect-ratio:auto;height:auto}.portfolio figure:nth-child(2){margin-top:75px}@media(max-width:700px){.portfolio{grid-template-columns:1fr;gap:40px}.portfolio figure:nth-child(2){margin-top:0}}
