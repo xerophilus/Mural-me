@@ -1,6 +1,8 @@
 @import "tailwindcss";
 
 /* ---------- Tokens ---------- */
+/* Mural Me platform brand (public/brand/). Marc's portfolio keeps its own lime palette below. */
+:root{--mural-charcoal:#1f2326;--mural-teal:#1b8a9a;--mural-orange:#f26b2a;--mural-cream:#f4f1ea}
 :root{--paper:#f6f4ee;--paper-2:#ecebe2;--ink:#1f231e;--accent:#d4e849;--accent-press:#c3d535;--accent-wash:#eaf0d6;--muted:#62675e;--line:#d9dbd0;--line-strong:#b5bdac;--line-dark:#3b4237;--error:#992f21;--focus:#5e7834;--sans:var(--font-sans),"Helvetica Neue",Arial,sans-serif;--serif:var(--font-serif),Georgia,serif;--gutter:clamp(20px,5vw,72px);--max:1440px;--star:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round'%3E%3Cpath d='M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6 5.6 18.4'/%3E%3C/svg%3E")}
 
 /* ---------- Base ---------- */
@@ -58,6 +60,9 @@ footer{background:var(--ink);color:var(--paper);padding:56px var(--gutter) 26px}
 .footer-links{display:flex;flex-wrap:wrap;gap:12px 26px;font-size:.9rem;margin:40px 0}
 .footer-links a:hover,.footer-bottom a:hover{color:var(--accent)}
 .footer-bottom{border-top:1px solid var(--line-dark);padding-top:22px;font-size:.78rem;color:#c0c6b8}
+.mm-credit{display:inline-flex;align-items:center;gap:8px;letter-spacing:.02em}
+.mm-credit img{width:18px;height:18px}
+.mm-credit strong{color:var(--paper);font-weight:700;letter-spacing:-.01em}
 
 /* ---------- Home: hero ---------- */
 .hero{padding:64px var(--gutter) 0;max-width:calc(var(--max) + 2 * var(--gutter));margin:auto}
@@ -315,7 +320,7 @@ body{font-size:16px}
 .final-cta h2{font-size:clamp(3rem,15vw,4rem)}
 .footer-top,.footer-bottom{align-items:flex-start}
 .footer-top{flex-direction:column}
-.footer-bottom{font-size:.7rem}
+.footer-bottom{font-size:.7rem;flex-wrap:wrap;gap:10px 20px}
 .article h1,.about-intro h1{font-size:clamp(2.4rem,11.5vw,3.4rem)}
 .article-figure{margin:40px calc(-1 * var(--gutter))}
 .article-sections{grid-template-columns:1fr;gap:36px}
