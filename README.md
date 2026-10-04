@@ -92,6 +92,9 @@ All editable copy lives in `lib/content.ts`. Visible "placeholder" notes have be
 
 `public/mural-concept.webp` is an unused generated concept, not Marc's work; it can be deleted.
 
+### Mural Me brand
+`public/brand/` holds the platform mark (`mark*.svg`), favicon, and logo lockups (`logo.svg`, `logo-reverse.svg`, `logo-stacked*.svg`). The wordmark is Montserrat ExtraBold "MURAL" + Regular "ME", outlined to paths so it renders identically everywhere. Regenerate with `scripts/generate-logos.mjs`. Brand colors are the `--mural-*` tokens in `app/globals.css`.
+
 ### Design system
 Tokens (colors, gutter, max width) are CSS variables at the top of `app/globals.css`. Type is Bricolage Grotesque (headings/body) with Instrument Serif italic for `<em>` accents, loaded with `next/font` in `app/layout.tsx`. The favicon is `app/icon.svg`.
 
