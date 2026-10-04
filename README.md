@@ -93,3 +93,8 @@ Go to `/admin`, sign in, expand a lead to see details and private photos, then c
 - `docs/FUTURE.md`: marketplace evolution without building it into V1.
 
 V1 does not retain draft personal data in browser storage. Form state survives back/forward step navigation but a page refresh starts again. An expired upload session requires restarting; no saved lead is shown until the database confirms success. The server uses the session UUID for duplicate-submit protection.
+
+## Configured Supabase project
+The initial schema and private storage bucket have been applied to **Mural me** (`lhlxdrmmouggzwherrzn`). Set `NEXT_PUBLIC_SUPABASE_URL=https://lhlxdrmmouggzwherrzn.supabase.co` and the project’s server-only secret key in deployment settings. The existing `SUPABASE_SERVICE_ROLE_KEY` variable accepts a modern `sb_secret_…` key as well as a legacy service role key. Do not put it in this repository or chat.
+
+Database verification confirmed atomic lead/image inserts, RLS on all six tables, denied anonymous lead access, and a private image bucket. Verification records were rolled back. The Supabase-created `rls_auto_enable()` event helper had public execution revoked; the remaining security advisor notices describe the intentional absence of client-access policies. See [Supabase’s advisor explanation](https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy). Browser upload and email verification still require deployment environment configuration.
