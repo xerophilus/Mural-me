@@ -1,8 +1,9 @@
 import Link from "next/link";
 import {primaryArtist,ctaLabel,landingPages,type Artist,type Project} from "@/lib/content";
+import {ArrowUpRight} from "@/components/icons";
 /** Links to the inquiry flow. Non-primary artists get ?artist= so the lead is routed to them. */
 export function requestHref(a:Artist=primaryArtist){return a.slug===primaryArtist.slug?"/request":`/request?artist=${a.slug}`}
-export function CTA({children,artist=primaryArtist,className=""}:{children?:React.ReactNode;artist?:Artist;className?:string}) {return <Link className={`button ${className}`} href={requestHref(artist)}>{children??ctaLabel(artist)}<span aria-hidden="true">↗</span></Link>}
+export function CTA({children,artist=primaryArtist,className=""}:{children?:React.ReactNode;artist?:Artist;className?:string}) {return <Link className={`button ${className}`} href={requestHref(artist)}>{children??ctaLabel(artist)}<ArrowUpRight/></Link>}
 export function Header(){const a=primaryArtist;return <header className="header"><Link href="/" className="wordmark">{a.name.toUpperCase()}<span>{a.role.toUpperCase()} / {a.region.toUpperCase()}</span></Link><nav aria-label="Main navigation"><Link href="/#work">Work</Link><Link href="/about">About</Link><CTA /></nav></header>}
 const footerLabels:Record<string,string>={"commercial-murals":"Commercial","residential-murals":"Residential","public-art":"Public art","cumberland-md":"Cumberland","morgantown-wv":"Morgantown"};
 export function Footer(){const a=primaryArtist;return <footer><div className="footer-top"><Link className="wordmark" href="/">{a.name.toUpperCase()}</Link><p>Painted by hand in {a.region}.</p></div><div className="footer-links">{Object.keys(landingPages).map(slug=><Link key={slug} href={`/${slug}`}>{footerLabels[slug]??landingPages[slug].eyebrow}</Link>)}<Link href="/about">About</Link><Link href="/privacy">Privacy</Link></div><div className="footer-bottom"><span>© {new Date().getFullYear()} {a.name}</span>{a.email?<a href={`mailto:${a.email}`}>{a.email}</a>:<span>{a.region} & beyond</span>}</div></footer>}
